@@ -1,15 +1,31 @@
-test("dummy", () => {
-  expect(1).toBe(1);
-});
+const controller = require("./CV006ConvocarAttendant");
 
 test("dummy", () => {
-  expect(1).toBe(1);
-});
+  const res = () => {
+    const json = (x) => {};
+    const status = (x) => {
+      return { json: json };
+    };
+    return { json, status };
+  };
 
-test("dummy", () => {
-  expect(1).toBe(1);
-});
+  const req = jest.fn();
+  req.mockReturnValueOnce({
+    params: {
+      cedula: "1234567890",
+      consecutivo: "1",
+    },
+  });
 
-test("dummy", () => {
-  expect(1).toBe(1);
+  const query = jest.fn(x => [[0]]);
+  const db = {
+    sequelize: {
+      query: query,
+    }
+  };
+
+  controller(db).getCouncilAttendant(req(), res()).then(() => {
+    expect(query.mock.calls.length).toBe(1);
+  });
+
 });
