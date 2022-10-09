@@ -1,6 +1,6 @@
 const controller = require("./CV006ConvocarAttendant");
 
-test("dummy", () => {
+test("count attendants", () => {
   const res = () => {
     const json = (x) => {};
     const status = (x) => {

@@ -1,3 +1,5 @@
+const controller = require("./CV006Convocar");
+
 test("dummy", () => {
   const res = () => {
     const json = (x) => {};
@@ -7,17 +9,29 @@ test("dummy", () => {
     return { json, status };
   };
 
-  expect(1).toBe(1);
-});
+  const req = jest.fn();
+  req.mockReturnValueOnce({
+    body: {
+      consecutivo: "1",
+      convocados: [2, 3, 4],
+      limite_solicitud: 10,
+    },
+  });
 
-test("dummy", () => {
-  expect(1).toBe(1);
-});
+  const create = jest.fn(async (x) => {});
+  const findAll = jest.fn(async (x) => [2, 3, 4]);
 
-test("dummy", () => {
-  expect(1).toBe(1);
-});
+  const db = {
+    Correo: {
+      findAll: findAll,
+    },
+    Convocado: {
+      create: create,
+    },
+  };
 
-test("dummy", () => {
-  expect(1).toBe(1);
+    controller(db).store(req(), res()).then(() => {
+        expect(create.mock.calls.length).toBe(3);
+        expect(findAll.mock.calls.length).toBe(3);
+    });
 });
